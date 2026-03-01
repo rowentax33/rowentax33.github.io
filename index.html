@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <link rel="stylesheet" href="avertissement.css">
+  <meta charset="UTF-8">
+  <title>As tu vraiment l'âge d'entrer ?</title>
+
+
+  <meta property="og:title" content="As tu vraiment l'âge d'entrer ?">
+  <meta property="og:description" content="Contenu réservé à un public averti">
+  <meta name="robots" content="noindex, nofollow">
+
+</head>
+
+<body>
+  <div class="box">
+    <h1>⚠️ Contenu Hentai ⚠️ </h1>
+    <p>
+      Ce site contient du contenu nsfw et est accessible uniquement aux personnes qui ont l'âge légal.<br>
+      En continuant, vous confirmez être autorisé à y accéder selon la loi de votre pays (généralement 18 ans).
+    </p>
+
+    <div class="buttons">
+      <button onclick="enter()">Continuer</button>
+      <button onclick="leave()">Partir</button>
+    </div>
+  </div>
+
+  <script>
+    function enter() {
+      localStorage.setItem("nsfw_ok", "true");
+      window.location.href = "withoutia.html";
+    }
+
+    function leave() {
+      window.location.href = "https://files.catbox.moe/1kexcu.jpg";
+    }
+  </script>
+</body>
+</html>
