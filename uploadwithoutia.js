@@ -20,6 +20,6 @@ document.getElementById("publish").onclick = async () => {
     msg.textContent = "Erreur upload ❌";
     console.error(error);
   } else {
-    msg.textContent = "Publié ✅";
+    msg.textContent = "Publié, merci :D";
   }
 };

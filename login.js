@@ -74,7 +74,7 @@ signupBtn.onclick = async () => {
 
   // si email confirmation ON, session = null
   if (!data.session) {
-    showMsg("Compte créé ✅ (si la confirmation email est activée, check tes mails)", "ok");
+    showMsg("Compte créé, regarde dans tes mails(Il y a sûrement une petite minute d'attente, sois patient :D))", "ok");
     return;
   }
 
