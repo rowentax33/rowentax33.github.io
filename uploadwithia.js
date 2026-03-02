@@ -10,16 +10,64 @@ const msg = document.getElementById("msg");
 
 document.getElementById("publish").onclick = async () => {
 
-  const { error } = await sb.from("images_withia").insert({
-    url: url.value,
-    tags: tags.value,
-    description: description.value
-  });
+  const fileInput = document.getElementById("fileInput");
+  const file = fileInput.files[0];
 
-  if (error) {
-    msg.textContent = "Erreur upload ❌";
-    console.error(error);
-  } else {
+  if (!file) {
+    msg.textContent = "Aucun fichier sélectionné ❌";
+    return;
+  }
+
+  // limite taille 200MB (exemple)
+  if (file.size > 200 * 1024 * 1024) {
+    msg.textContent = "Fichier trop gros ❌";
+    return;
+  }
+
+  msg.textContent = "Upload en cours...";
+
+  // 1️⃣ Upload vers Zerostorage
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("title", file.name);
+
+  try {
+    const res = await fetch(
+      "https://upload.zerostorage.net/api/upload/universal",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+    const result = await res.json();
+
+    if (!result.success) {
+      msg.textContent = "Erreur Zerostorage ❌";
+      console.error(result);
+      return;
+    }
+
+    // 2️⃣ Construire URL publique
+    const publicUrl = "https://zerostorage.net" + result.viewUrl;
+
+    // 3️⃣ Enregistrer dans Supabase
+    const { error } = await sb.from("images_withoutia").insert({
+      url: publicUrl,
+      tags: tags.value,
+      description: description.value
+    });
+
+    if (error) {
+      msg.textContent = "Erreur base ❌";
+      console.error(error);
+      return;
+    }
+
     msg.textContent = "Publié, merci :D";
+
+  } catch (err) {
+    console.error(err);
+    msg.textContent = "Erreur upload ❌";
   }
 };
