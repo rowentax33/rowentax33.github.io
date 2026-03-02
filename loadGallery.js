@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     .from(table)
     .select("id,url,tags,description,created_at")
     .order("created_at", { ascending: false });
+    console.log("DATA:", data);
 
   if (error) {
     console.error("Erreur lecture table:", error);
