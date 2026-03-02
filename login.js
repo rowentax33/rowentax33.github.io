@@ -74,11 +74,11 @@ signupBtn.onclick = async () => {
 
   // si email confirmation ON, session = null
   if (!data.session) {
-    showMsg("Compte créé, regarde dans tes mails(Il y a sûrement une petite minute d'attente, sois patient :D))", "ok");
+    showMsg("Compte créé, regarde dans tes mails (il y a sûrement une petite minute d'attente, sois patient :D)", "ok");
     return;
   }
 
-  showMsg("Compte créé + connecté ✅", "ok");
+  showMsg("Compte créé + connecté", "ok");
   setTimeout(() => (location.href = "withoutia.html"), 700);
 };
 
@@ -93,5 +93,5 @@ forgotBtn.onclick = async (e) => {
 
   const { error } = await sb.auth.resetPasswordForEmail(email.value.trim());
   if (error) showMsg(error.message, "err");
-  else showMsg("Email envoyé ✅", "ok");
+  else showMsg("Email envoyé", "ok");
 };
