@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     img.src = row.url;
     img.alt = row.description || "";
     img.dataset.tags = row.tags || "";
-    gallery.prepend(img);
+    gallery.append(img);
   }
 
   console.log(`✅ Galerie chargée depuis ${table}:`, (data || []).length, "images");
