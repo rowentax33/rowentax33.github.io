@@ -41,6 +41,7 @@ document.getElementById("publish").onclick = async () => {
     );
 
     const result = await res.json();
+    console.log("RESPONSE:", result);
 
     if (!result.success) {
       msg.textContent = "Erreur Zerostorage ❌";
