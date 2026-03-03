@@ -1,44 +1,29 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Upload — Sans IA</title>
-  <link rel="stylesheet" href="upload.css">
+<div class="upload-box">
 
-  <!-- Supabase CDN -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script src="loadGallery.js"></script>
-</head>
+  <h2>Upload — Sans IA</h2>
 
-<body>
+  <input id="tags" type="text" placeholder="Tags">
+  <textarea id="description" placeholder="Description"></textarea>
 
-<header class="topbar">
-  <a href="withoutia.html" class="logo">Goon Multiverse 🔥</a>
-</header>
-
-<main class="center">
-
-  <div class="upload-box">
-
-    <h2>Upload — Sans IA</h2>
-    <input id="url" type="text" placeholder="URL de l'image">
-    <input id="tags" type="text" placeholder="Tags">
-    <textarea id="description" placeholder="Description"></textarea>
+  <!-- Custom file button -->
+  <label class="file-label">
+    📁 Sélectionner une image
     <input type="file" id="fileInput" accept="image/*,video/*">
+  </label>
 
-    <button id="publish">Publier</button>
+  <button id="publish">Publier</button>
 
-    <a href="withoutia.html" class="back">← Retour</a>
-    <p id="msg"></p>
-      <p><h6>⚠️Attention⚠️  : le contenu impliquant des mineures/mineurs 
-      explicitement ou implicitement sera supprimé et l'auteur sera sanctionné. 
-      Merci de respecter la loi :)
-      Et au fait... Voici un tuto sur <a href="https://files.catbox.moe/y960p4.mp4">pc</a> 
-      et sur <a href="">mobile</a> qui montre comment poster... Derien ;)</h6></p>
-  </div>
+  <a href="withoutia.html" class="back">← Retour</a>
 
-</main>
+  <p id="msg"></p>
 
-<script src="uploadwithoutia.js"></script>
-</body>
-</html>
+  <p class="warning">
+    ⚠️ Attention ⚠️ : le contenu impliquant des mineures/mineurs 
+    explicitement ou implicitement sera supprimé et l'auteur sera sanctionné. 
+    Merci de respecter la loi :)
+    <br><br>
+    Voici un tuto sur <a href="https://files.catbox.moe/y960p4.mp4">PC</a> 
+    et sur <a href="">mobile</a>.
+  </p>
+
+</div>

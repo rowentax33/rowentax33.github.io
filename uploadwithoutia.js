@@ -44,6 +44,20 @@ document.getElementById("publish").onclick = async () => {
 );
 
     const result = await res.json();
+    const viewUrl = result.viewUrl || result.url || result.link;
+
+if (!viewUrl) {
+  msg.textContent = "Erreur récupération URL ❌";
+  return;
+}
+
+// Extraire l'UUID
+const uuid = viewUrl.split("/view/")[1];
+
+// Construire le vrai lien
+const finalUrl = `https://zerostorage.net/api/files/download/${uuid}?t=${Date.now()}`;
+
+console.log("Final URL:", finalUrl);
 
     if (!result.success) {
       msg.textContent = "Erreur Zerostorage ❌";
