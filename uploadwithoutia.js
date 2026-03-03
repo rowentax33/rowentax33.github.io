@@ -32,12 +32,16 @@ document.getElementById("publish").onclick = async () => {
   formData.append("title", file.name);
 
   try {
-    const res = await fetch("https://waljqaxkbvzidkrzbcbz.functions.supabase.co/upload-to-zerostorage",
-      {
-        method: "POST",
-        body: formData
-      }
-    );
+    const res = await fetch(
+  "https://waljqaxkbvzidkrzbcbz.functions.supabase.co/upload-to-zerostorage",
+  {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbGpxYXhrYnZ6aWRrcnpiY2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4OTA3MDcsImV4cCI6MjA4NDQ2NjcwN30.9lBgfkJMCLk2D-gXjxj9bV5b5x-HZxY_cEBrdlsExBw"
+    },
+    body: formData
+  }
+);
 
     const result = await res.json();
 
