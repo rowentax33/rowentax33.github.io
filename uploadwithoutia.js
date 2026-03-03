@@ -32,8 +32,7 @@ document.getElementById("publish").onclick = async () => {
   formData.append("title", file.name);
 
   try {
-    const res = await fetch(
-      "https://upload.zerostorage.net/api/upload/universal",
+    const res = await fetch("https://waljqaxkbvzidkrzbcbz.functions.supabase.co/upload-to-zerostorage",
       {
         method: "POST",
         body: formData
