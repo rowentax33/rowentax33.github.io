@@ -1,74 +1,83 @@
-const SUPABASE_URL = "https://waljqaxkbvzidkrzbcbz.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbGpxYXhrYnZ6aWRrcnpiY2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4OTA3MDcsImV4cCI6MjA4NDQ2NjcwN30.9lBgfkJMCLk2D-gXjxj9bV5b5x-HZxY_cEBrdlsExBw";
+document.addEventListener("DOMContentLoaded", () => {
 
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  console.log("JS MARCHE ✅");
 
-const url = document.getElementById("url");
-const tags = document.getElementById("tags");
-const description = document.getElementById("description");
-const msg = document.getElementById("msg");
+  const SUPABASE_URL = "https://waljqaxkbvzidkrzbcbz.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbGpxYXhrYnZ6aWRrcnpiY2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4OTA3MDcsImV4cCI6MjA4NDQ2NjcwN30.9lBgfkJMCLk2D-gXjxj9bV5b5x-HZxY_cEBrdlsExBw";
 
-document.getElementById("publish").onclick = async () => {
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+  const publishBtn = document.getElementById("publish");
+  const msg = document.getElementById("msg");
   const fileInput = document.getElementById("fileInput");
-  const file = fileInput.files[0];
 
-  if (!file) {
-    msg.textContent = "Aucun fichier sélectionné ❌";
+  if (!publishBtn) {
+    console.error("Bouton #publish introuvable");
     return;
   }
 
-  // limite taille 200MB (exemple)
-  if (file.size > 200 * 1024 * 1024) {
-    msg.textContent = "Fichier trop gros ❌";
-    return;
+  publishBtn.onclick = async () => {
+
+    console.log("Bouton cliqué 🚀");
+
+    if (!fileInput.files.length) {
+      msg.textContent = "Sélectionne un fichier ❌";
+      return;
+    }
+
+    try {
+
+      // 🔹 Upload vers ta Edge Function
+      const formData = new FormData();
+      formData.append("file", fileInput.files[0]);
+
+     const res = await fetch(
+  "https://waljqaxkbvzidkrzbcbz.functions.supabase.co/upload-to-zerostorage",
+  {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${SUPABASE_KEY}`
+    },
+    body: formData
   }
+);
 
-  msg.textContent = "Upload en cours...";
+      const result = await res.json();
 
-  // 1️⃣ Upload vers Zerostorage
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("title", file.name);
+      const viewUrl = result.url || result.link || result.viewUrl;
 
-  try {
-    const res = await fetch(
-      "https://upload.zerostorage.net/api/upload/universal",
-      {
-        method: "POST",
-        body: formData
+      if (!viewUrl) {
+        msg.textContent = "Erreur récupération URL";
+        return;
       }
-    );
 
-    const result = await res.json();
-    console.log("RESPONSE:", result);
+      const uuid = viewUrl.split("/view/")[1];
+      const finalUrl = `https://zerostorage.net/api/files/download/${uuid}?t=${Date.now()}`;
 
-    if (!result.success) {
-      msg.textContent = "Erreur Zerostorage ❌";
-      console.error(result);
-      return;
+      // 🔹 Insert dans Supabase
+      const { data, error } = await supabaseClient
+        .from("images_withia")
+        .insert([
+          {
+            url: finalUrl,
+            tags: document.getElementById("tags").value,
+            description: document.getElementById("description").value
+          }
+        ]);
+
+      if (error) {
+        console.error("Erreur Supabase :", error);
+        msg.textContent = "Erreur publication";
+      } else {
+        console.log("Upload enregistré :", data);
+        msg.textContent = "Publié, merci :)";
+      }
+
+    } catch (err) {
+      console.error("Erreur inattendue :", err);
+      msg.textContent = "Erreur serveur";
     }
 
-    // 2️⃣ Construire URL publique
-    const publicUrl = "https://zerostorage.net" + result.viewUrl;
+  };
 
-    // 3️⃣ Enregistrer dans Supabase
-    const { error } = await sb.from("images_withoutia").insert({
-      url: publicUrl,
-      tags: tags.value,
-      description: description.value
-    });
-
-    if (error) {
-      msg.textContent = "Erreur base ❌";
-      console.error(error);
-      return;
-    }
-
-    msg.textContent = "Publié, merci :D";
-
-  } catch (err) {
-    console.error(err);
-    msg.textContent = "Erreur upload ❌";
-  }
-};
+});
