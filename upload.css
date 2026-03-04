@@ -109,24 +109,27 @@ a{
   display: none;
 }
 
+.file-label input {
+  display: none;
+}
+
 .file-label {
   display: block;
-  padding: 14px;
+  width: 100%;
+  padding: 12px;
   margin-top: 15px;
-  background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+  background: #1e1e1e;
   border: 1px solid #333;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   text-align: center;
-  transition: 0.2s;
   font-weight: 500;
+  transition: background 0.2s;
 }
 
 .file-label:hover {
-  background: linear-gradient(135deg, #2a2a2a, #333);
-  transform: scale(1.02);
+  background: #2a2a2a;
 }
-
 #msg {
   margin-top: 10px;
   min-height: 20px;
@@ -137,3 +140,4 @@ a{
   opacity: 0.7;
   margin-top: 15px;
 }
+
