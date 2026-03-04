@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
   {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbGpxYXhrYnZ6aWRrcnpiY2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4OTA3MDcsImV4cCI6MjA4NDQ2NjcwN30.9lBgfkJMCLk2D-gXjxj9bV5b5x-HZxY_cEBrdlsExBw}`
+      "Authorization": `Bearer ${SUPABASE_KEY}`
     },
     body: formData
   }
