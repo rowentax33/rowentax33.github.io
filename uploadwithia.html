@@ -2,45 +2,42 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Upload — IA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="uploadwithoutia.js"></script>
   <link rel="stylesheet" href="upload.css">
-
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script src="loadGallery.js"></script>
+  <title>Upload — Sans IA</title>
 </head>
-
 <body>
-<input type="file" id="fileInput" accept="image/*,video/*">
-<header class="topbar">
-  <a href="withia.html" class="logo">Goon Multiverse IA 🔥</a>
-</header>
+  
+<link rel="stylesheet" href="upload.css">
 
-<main class="center">
+  <h2>Upload — Avec IA</h2>
 
-  <div class="upload-box">
+  <input id="tags" type="text" placeholder="Tags">
+  <textarea id="description" placeholder="Description"></textarea>
 
-    <h2>Upload — IA</h2> 
-    <input id="url" type="text" placeholder="URL de l'image">
-    <input id="tags" type="text" placeholder="Tags">
-    <textarea id="description" placeholder="Description"></textarea>
-    <input type="file" id="fileInput" accept="image/*,video/*">
+  <!-- Custom file button -->
+  
+  <input type="file" id="fileInput" accept="image/*,video/*">
 
-    <button id="publish">Publier</button>
+  <button id="publish">Publier (si cela met du temps sans répondre c'est normal, ça charge. Un peu de patiente :)</button>
 
-    <a href="withia.html" class="back">← Retour</a>
+  <a href="withoutia.html" class="back">← Retour</a>
 
-    <p id="msg"></p>
+  <p id="msg"></p>
 
-  <h6>⚠️Attenton⚠️  : le contenu impliquant des mineures/mineurs 
-      explicitement ou implicitement sera supprimé et l'auteur sera sanctionné. 
-      Merci de respecter la loi :)
-      Et au fait... Voici un tuto sur <a href="https://files.catbox.moe/y960p4.mp4">pc</a> 
-      et sur <a href="">mobile</a> qui montre comment poster... Derien ;)</h6>
+  <p class="warning">
+    ⚠️ Attention ⚠️ : le contenu impliquant des mineures/mineurs 
+    explicitement ou implicitement sera supprimé et l'auteur sera sanctionné. 
+    Merci de respecter la loi :)
+    <br><br>
+    Voici un tuto sur <a href="https://files.catbox.moe/y960p4.mp4">PC</a> 
+    et sur <a href="">mobile</a>.
+  </p>
 
-  </div>
+</div>
 
-</main>
-
-<script src="uploadwithia.js"></script>
 </body>
-</html>
+</html><div class="upload-box">
+
