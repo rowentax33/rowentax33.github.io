@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const viewUrl = result.url || result.link || result.viewUrl;
 
       if (!viewUrl) {
-        msg.textContent = "Erreur récupération URL ❌";
+        msg.textContent = "Erreur récupération URL";
         return;
       }
 
@@ -67,15 +67,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (error) {
         console.error("Erreur Supabase :", error);
-        msg.textContent = "Erreur publication ❌";
+        msg.textContent = "Erreur publication";
       } else {
         console.log("Upload enregistré :", data);
-        msg.textContent = "Publié avec succès ✅";
+        msg.textContent = "Publié, merci :)";
       }
 
     } catch (err) {
       console.error("Erreur inattendue :", err);
-      msg.textContent = "Erreur serveur ❌";
+      msg.textContent = "Erreur serveur";
     }
 
   };
