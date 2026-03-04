@@ -104,32 +104,7 @@ a{
   text-decoration:none;
 }
 
-/* Masquer le vrai input file */
-.file-label input {
-  display: none;
-}
 
-.file-label input {
-  display: none;
-}
-
-.file-label {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  margin-top: 15px;
-  background: #1e1e1e;
-  border: 1px solid #333;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-  font-weight: 500;
-  transition: background 0.2s;
-}
-
-.file-label:hover {
-  background: #2a2a2a;
-}
 #msg {
   margin-top: 10px;
   min-height: 20px;
