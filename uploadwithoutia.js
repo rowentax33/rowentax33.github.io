@@ -21,40 +21,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       // Exemple simple : insérer un post test
+
       const { data, error } = await supabaseClient
-        .from("images_withoutia")
-        .insert([
-          {
-            title: "Test",
-            content: "Ceci est un test"
-          }
-        ]);
-
-      if (error) {
-        console.error("Erreur Supabase :", error);
-      } else {
-        console.log("Post publié :", data);
-      }
-
-    } catch (err) {
-      console.error("Erreur inattendue :", err);
+  .from("images_withoutia")
+  .insert([
+    {
+      url: finalUrl, // le lien transformé zerostorage
+      tags: document.getElementById("tags").value,
+      description: document.getElementById("description").value
     }
+  ]);
 
-  };
-
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  console.log("JS MARCHE ✅");
-
-  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-  const publishBtn = document.getElementById("publish");
-
-  publishBtn.onclick = async () => {
-
-    console.log("Bouton cliqué 🚀");
+if (error) {
+  console.error("Erreur Supabase :", error);
+  msg.textContent = "Erreur publication ❌";
+} else {
+  console.log("Upload enregistré :", data);
+  msg.textContent = "Publié avec succès ✅";
+}
+      
+    }
 
   };
 
