@@ -1,90 +1,45 @@
-const SUPABASE_URL = "https://waljqaxkbvzidkrzbcbz.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbGpxYXhrYnZ6aWRrcnpiY2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4OTA3MDcsImV4cCI6MjA4NDQ2NjcwN30.9lBgfkJMCLk2D-gXjxj9bV5b5x-HZxY_cEBrdlsExBw";
+document.addEventListener("DOMContentLoaded", () => {
 
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  // 🔹 Configuration Supabase
+  const SUPABASE_URL = "https://waljqaxkbvzidkrzbcbz.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbGpxYXhrYnZ6aWRrcnpiY2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4OTA3MDcsImV4cCI6MjA4NDQ2NjcwN30.9lBgfkJMCLk2D-gXjxj9bV5b5x-HZxY_cEBrdlsExBw";
 
-const url = document.getElementById("url");
-const tags = document.getElementById("tags");
-const description = document.getElementById("description");
-const msg = document.getElementById("msg");
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-document.getElementById("publish").onclick = async () => {
+  // 🔹 Récupération du bouton
+  const publishBtn = document.getElementById("publish");
 
-  const fileInput = document.getElementById("fileInput");
-  const file = fileInput.files[0];
-
-  if (!file) {
-    msg.textContent = "Aucun fichier sélectionné ❌";
+  if (!publishBtn) {
+    console.error("Bouton #publish introuvable dans le HTML");
     return;
   }
 
-  // limite taille 200MB (exemple)
-  if (file.size > 200 * 1024 * 1024) {
-    msg.textContent = "Fichier trop gros ❌";
-    return;
-  }
+  // Quand on clique
+  publishBtn.onclick = async () => {
 
-  msg.textContent = "Upload en cours...";
+    console.log("Bouton cliqué");
 
-  // 1️⃣ Upload vers Zerostorage
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("title", file.name);
+    try {
+      // Exemple simple : insérer un post test
+      const { data, error } = await supabaseClient
+        .from("posts")
+        .insert([
+          {
+            title: "Test",
+            content: "Ceci est un test"
+          }
+        ]);
 
-  try {
-    const res = await fetch(
-  "https://waljqaxkbvzidkrzbcbz.functions.supabase.co/upload-to-zerostorage",
-  {
-    method: "POST",
-    headers: {
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbGpxYXhrYnZ6aWRrcnpiY2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4OTA3MDcsImV4cCI6MjA4NDQ2NjcwN30.9lBgfkJMCLk2D-gXjxj9bV5b5x-HZxY_cEBrdlsExBw"
-    },
-    body: formData
-  }
-);
+      if (error) {
+        console.error("Erreur Supabase :", error);
+      } else {
+        console.log("Post publié :", data);
+      }
 
-    const result = await res.json();
-    const viewUrl = result.viewUrl || result.url || result.link;
-
-if (!viewUrl) {
-  msg.textContent = "Erreur récupération URL ❌";
-  return;
-}
-
-// Extraire l'UUID
-const uuid = viewUrl.split("/view/")[1];
-
-// Construire le vrai lien
-const finalUrl = `https://zerostorage.net/api/files/download/${uuid}?t=${Date.now()}`;
-
-console.log("Final URL:", finalUrl);
-
-    if (!result.success) {
-      msg.textContent = "Erreur Zerostorage ❌";
-      console.error(result);
-      return;
+    } catch (err) {
+      console.error("Erreur inattendue :", err);
     }
 
-    // 2️⃣ Construire URL publique
-    const publicUrl = "https://zerostorage.net" + result.viewUrl;
+  };
 
-    // 3️⃣ Enregistrer dans Supabase
-    const { error } = await sb.from("images_withoutia").insert({
-      url: publicUrl,
-      tags: tags.value,
-      description: description.value
-    });
-
-    if (error) {
-      msg.textContent = "Erreur base ❌";
-      console.error(error);
-      return;
-    }
-
-    msg.textContent = "Publié, merci :D";
-
-  } catch (err) {
-    console.error(err);
-    msg.textContent = "Erreur upload ❌";
-  }
-};
+});
