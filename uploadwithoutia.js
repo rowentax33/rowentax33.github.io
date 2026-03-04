@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       // Exemple simple : insérer un post test
       const { data, error } = await supabaseClient
-        .from("posts")
+        .from("images_withoutia")
         .insert([
           {
             title: "Test",
@@ -39,6 +39,22 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       console.error("Erreur inattendue :", err);
     }
+
+  };
+
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  console.log("JS MARCHE ✅");
+
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const publishBtn = document.getElementById("publish");
+
+  publishBtn.onclick = async () => {
+
+    console.log("Bouton cliqué 🚀");
 
   };
 
