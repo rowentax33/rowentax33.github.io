@@ -42,16 +42,35 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 );
 
-      const result = await res.json();
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("Upload function HTTP error", res.status, res.statusText, text);
+        msg.textContent = "Erreur serveur upload";
+        return;
+      }
 
-      const viewUrl = result.url || result.link || result.viewUrl;
+      const result = await res.json();
+      console.log("Upload function response:", result);
+
+      const viewUrl =
+        result.url ||
+        result.link ||
+        result.viewUrl ||
+        result.upload_url ||
+        result.uploadURL ||
+        result.data?.url ||
+        result.data?.link ||
+        result.data?.viewUrl ||
+        result.file?.url ||
+        result.file?.viewURL;
 
       if (!viewUrl) {
+        console.error("Impossible de récupérer viewUrl dans la réponse upload", result);
         msg.textContent = "Erreur récupération URL";
         return;
       }
 
-      const uuid = viewUrl.split("/view/")[1];
+      const uuid = viewUrl.split("/view/")[1] || viewUrl.split("/").pop();
       const finalUrl = `https://zerostorage.net/api/files/download/${uuid}?t=${Date.now()}`;
 
       // 🔹 Insert dans Supabase
