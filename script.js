@@ -3,14 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const SUPABASE_ANON_KEY =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbGpxYXhrYnZ6aWRrcnpiY2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4OTA3MDcsImV4cCI6MjA4NDQ2NjcwN30.9lBgfkJMCLk2D-gXjxj9bV5b5x-HZxY_cEBrdlsExBw";
 
-  // ===== ELEMENTS (compat multi pages) =====
+
   const searchEl = document.getElementById("search");
   const randomBtn = document.getElementById("randomBtn");
 
   const withiaBtn = document.getElementById("withiaBtn");
   const withoutiaBtn = document.getElementById("withoutiaBtn");
 
-  // Compte peut s'appeler loginBtn ou compteBtn selon tes pages
   const compteBtn =
     document.getElementById("compteBtn") || document.getElementById("loginBtn");
 
@@ -20,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const viewer = document.getElementById("viewer");
   const viewerImg = document.getElementById("viewerImg");
 
-  // ===== UTILS =====
   function getImages() {
     return Array.from(document.querySelectorAll("#gallery img"));
   }
@@ -37,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
     viewerImg.src = "";
   }
 
-  // ===== SEARCH =====
   if (searchEl) {
     searchEl.addEventListener("input", () => {
       const value = searchEl.value.toLowerCase().trim();
@@ -51,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ===== VIEWER (click image) =====
   if (gallery) {
     gallery.addEventListener("click", (e) => {
       const img = e.target.closest("img");
@@ -65,7 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Escape") closeViewer();
   });
 
-  // ===== RANDOM =====
   if (randomBtn) {
     randomBtn.addEventListener("click", () => {
       const visible = getImages().filter(
@@ -79,8 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ===== NAV BUTTONS =====
-  if (withiaBtn) {
+ if (withiaBtn) {
     withiaBtn.addEventListener("click", () => {
       location.href = "withia.html";
     });
@@ -92,9 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ===== SUPABASE INIT (wait a bit if CDN loaded after) =====
-  function waitForSupabase(maxMs = 3000) {
-    return new Promise((resolve) => {
+ function waitForSupabase(maxMs = 3000) {
+	      return new Promise((resolve) => {
       const start = Date.now();
       const timer = setInterval(() => {
         if (window.supabase && typeof window.supabase.createClient === "function") {
@@ -120,12 +113,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return sb;
   }
 
-  // ===== COMPTE BUTTON =====
 if (compteBtn) {
   compteBtn.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    // si supabase pas prêt → login direct
     if (!sb) {
       location.href = "login.html";
       return;
@@ -140,7 +131,6 @@ if (compteBtn) {
     }
   });
 }
-  // ===== ADD BUTTON (always visible, redirect based on auth + role) =====
   async function handleAddClick() {
     if (!sb) {
       location.href = "login.html";
@@ -174,13 +164,11 @@ if (compteBtn) {
       return;
     }
 
-    // Choix auto de la page upload selon la section où t'es
     const path = (location.pathname || "").toLowerCase();
     if (path.includes("withia")) location.href = "uploadwithia.html";
     else location.href = "uploadwithoutia.html";
   }
 
-  // ===== HEADER HIDE ON SCROLL =====
   const header = document.querySelector("header");
   if (header) {
     let last = window.scrollY;
@@ -219,7 +207,7 @@ if (compteBtn) {
     );
   }
 
-  // ===== START =====
+
   (async () => {
     await initSupabase();
 

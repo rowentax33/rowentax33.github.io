@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="upload.css">
+  <link rel="stylesheet" href="video.css">
+
+  <title>Upload — Vidéo</title>
+</head>
+
+<body>
+
+<div class="upload-box">
+
+  <h2 id="uploadTitle">Upload — Vidéo</h2>
+
+  <input id="tags" type="text" placeholder="Tags">
+  <textarea id="description" placeholder="Description"></textarea>
+
+  <input type="file" id="fileInput" accept="video/*">
+
+  <div class="video-mode">
+    <label>
+      <input type="checkbox" id="isIA">
+      Contenu généré ou modifié avec IA
+    </label>
+  </div>
+
+  <button id="publish">
+    Publier (si cela met du temps sans répondre c'est normal, ça charge.
+    Un peu de patience &gt;:] )
+  </button>
+
+  <a href="video.html" class="back">← Retour</a>
+
+  <p id="msg"></p>
+
+  <p class="warning">
+    ⚠️ Attention ⚠️ : le contenu impliquant des mineures/mineurs
+    explicitement ou implicitement sera supprimé et l'auteur sera sanctionné.
+    Merci de respecter la loi :)
+    <br><br>
+    Voici un tuto sur <a href="https://files.catbox.moe/y960p4.mp4">PC</a>
+    et sur <a href="">mobile</a>.
+  </p>
+
+</div>
+
+<script src="uploadvideo.js"></script>
+</body>
+</html>
